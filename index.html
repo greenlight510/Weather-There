@@ -75,3 +75,50 @@
                                 <div class="spinner-border float-right" role="status"></div>
                             </div>
 
+                            <div class="card-body text-dark">
+                                <div class="row my-row">
+                                    <div class="col-4 my-col" id="current-weather-icon">
+                                        <!-- Current Weather Icon -->
+                                    </div>
+
+                                    <div class="col-8 my-col">
+                                        <div class="row my-row" id="current-temp">
+                                            <!-- Temperature Display  -->
+                                        </div>
+
+                                        <div class="row my-row" id="current-humidity">
+                                            <!-- Humidity Display -->
+                                        </div>
+
+                                        <div class="row my-row" id="current-wind">
+                                            <!-- Wind Speed Display -->
+                                        </div>
+
+                                        <div class="row my-row">
+                                            <!-- UV Index Display -->
+                                            <h5>
+                                                <span class="badge badge-pill align-middle" id="current-uvi"></span>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row my-row">
+                                    <div class="col-12 my-col">
+                                        <div class="text-center hide" id="update-forcast">
+                                            <!-- spinner - displays in current weather card body on recent cities button click and on forcast update every 10 min -->
+                                            <div class="spinner-border spinner-border-sm" role="status"></div>
+                                        </div>
+
+                                        <div class="text-center" id="updated-forecast-timestamp"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row my-row">
+                        <!-- 5-day forcast card - styled to extend to maximum width of its container-->
+                        <div class="card border-dark" style="width: 100%">
+                            <div class="card-header">5-Day Forecast</div>
+
