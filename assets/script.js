@@ -83,3 +83,28 @@ function oneCall(r) {
     r.coord.lon +
     "&units=imperial&exclude=hourly,minutely";
 
+    $.ajax({
+        async: true,
+        crossDomain: true,
+        url: queryURL,
+        method: "GET",
+      })
+      .then(function (response) {
+        r = Object.assign({ name: r.name }, response);
+        localStorage.setItem(r.name, JSON.stringify(r));
+        recentCities();
+    
+        displayCurrnet(r.name);
+        display5Day(r.name);
+        $("#update-forcast").addClass("hide");
+    
+        timeStamp = moment.unix(r.current.dt).tz(r.timezone).format("h:mm a");
+    
+        $("#updated-forecast-timestamp").text(
+          "Last updated - " + timeStamp + " - " + r.timezone
+        );
+    
+        // show updated-forecast-timestamp
+        $("#updated-forecast-timestamp").removeClass("hide");
+      });
+    }
