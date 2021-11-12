@@ -1,4 +1,4 @@
-var key = "63bf744b035f495cccad8662678a851d";
+var key = "5848435175956abca92a52e33e5b05e2";
 
 // Recent cities
 recentCities();
