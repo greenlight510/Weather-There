@@ -22,3 +22,64 @@ if (localStorage.getItem("last_searched") == null) {
 function updateForecast() {
   $("#updated-forecast-timestamp").addClass("hide");
 
+  // Show spinner
+  $("#update-forcast").removeClass("hide");
+
+  currentWeather(localStorage.getItem("last_searched"));
+}
+
+//Event for open weather api call
+$(".search").on("click", function () {
+  var city = $(this).siblings(".form-control").val();
+
+  $(this).siblings(".form-control").val("");
+
+  currentWeather(city);
+});
+
+// Recent cities listener to make open weather call
+$("#recent-cities-btns").on("click", function () {
+  var city = event.target.id;
+
+  localStorage.setItem("last_searched", city);
+
+  displayCurrnet(city);
+
+  // Function call display5Day
+  display5Day(city);
+
+  updateForecast();
+});
+
+function currentWeather(city) {
+  var queryURL =
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    city +
+    "&units=imperial" +
+    "&appid=" +
+    key;
+
+  $.ajax({
+    async: true,
+    crossDomain: true,
+    url: queryURL,
+    method: "GET",
+  })
+  .then(function (response) {
+    localStorage.setItem("last_searched", response.name);
+
+    oneCall(response);
+  });
+}
+// Function oneCall
+function oneCall(r) {
+  var queryURL =
+    "https://api.openweathermap.org/data/2.5/onecall?" +
+    "&appid=" +
+    key +
+    "&lat=" +
+    r.coord.lat +
+    "&lon=" +
+    r.coord.lon +
+    "&units=imperial&exclude=hourly,minutely";
+
