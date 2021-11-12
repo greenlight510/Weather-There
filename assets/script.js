@@ -193,3 +193,75 @@ function oneCall(r) {
           }
         }
       }
+      function isJSONcity(i) {
+        try {
+          // if local storage key value is equal to the city name (in its corresponding structure) is evaluated, then return true
+          JSON.parse(localStorage.getItem(localStorage.key(i))).name ==
+            localStorage.key(i);
+      
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+      // Function displays weather data from local storage to the current weather area
+      function displayCurrnet(city) {
+        for (i = 0; i < localStorage.length; i++) {
+          if (city == localStorage.key(i)) {
+            var currentConditions = JSON.parse(
+              localStorage.getItem(localStorage.key(i))
+            );
+      
+            // Get temperature data from current conditions
+            var currentTemp = currentConditions.current.temp.toFixed(1);
+      
+            // Get date
+            var currentDate = moment
+              .unix(currentConditions.current.dt)
+              .tz(currentConditions.timezone)
+              .format("dddd, MMMM Do YYYY");
+      
+            // Create weather icon image source
+            var imgURL =
+              "https://openweathermap.org/img/wn/" +
+              currentConditions.current.weather[0].icon +
+              "@2x.png";
+      
+            // Clear previous weather icon image
+            $("#current-weather-icon").empty();
+      
+            $("#current-weather-icon").append("<img src =" + imgURL + ">");
+            // Display current city and date
+            $("#current-city-date").text(
+              currentConditions.name + " - " + currentDate
+            );
+            // Temperature Display
+            $("#current-temp").text(
+              "Temperature: " + currentTemp + String.fromCharCode(176) + "F"
+            );
+            // Relative Humidity Display
+            $("#current-humidity").text(
+              "Humidity: " + currentConditions.current.humidity + "%"
+            );
+            // Wind Speed Display
+            $("#current-wind").text(
+              "Wind Speed: " + currentConditions.current.wind_speed + " mph"
+            );
+            var uvi = currentConditions.current.uvi;
+            // UV Index Display
+            $("#current-uvi").text("UV Index: " + uvi);
+      
+            $("#current-uvi").removeClass("badge-success badge-warning badge-danger");
+      
+            if (uvi < 3) {
+              $("#current-uvi").addClass("badge-success");
+            } else if (uvi >= 3 && uvi < 8) {
+              $("#current-uvi").addClass("badge-warning");
+            } else {
+              $("#current-uvi").addClass("badge-danger");
+            }
+      
+            $("#weatherDisplay").removeClass("hide");
+          }
+        }
+      }
