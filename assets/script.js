@@ -108,3 +108,88 @@ function oneCall(r) {
         $("#updated-forecast-timestamp").removeClass("hide");
       });
     }
+    // Function 5Day displays
+    function display5Day(r) {
+        var forecastConditions = JSON.parse(localStorage.getItem(r));
+        $("#forcast-5day-container").empty();
+      
+        for (i = 0; i < 6; i++) {
+          // 5-day forecast display
+          var card5dFrcstSize = $("<div>");
+          var card5dFrcst = $("<div>");
+          var card5dFrcstHdr = $("<div>");
+          var card5dFrcstBdy = $("<div>");
+          var card5dFrcstIcn = $("<div>");
+          var card5dIcnDiv = $("<div>");
+          var card5dFrcstTmp = $("<div>");
+          var card5dFrcstRH = $("<div>");
+      
+          if (i == 0) {
+            $(card5dFrcstSize).addClass("hide");
+          }
+      
+          $(card5dFrcstSize).addClass("col-lg-2 col-md-4 col-sm-3 mb-4 card5day");
+          $(card5dFrcstSize).attr("id", "day" + "-" + i);
+          $("#forcast-5day-container").append(card5dFrcstSize);
+          $(card5dFrcst).addClass("card text-white bg-info");
+          $(card5dFrcst).attr("id", "card5dFrcst" + "-" + i);
+          $(card5dFrcstSize).append(card5dFrcst);
+          $(card5dFrcstHdr).addClass("card-header card5day-header");
+          $(card5dFrcstHdr).attr("id", "card5dFrcstHdr" + "-" + i);
+      
+          date = moment
+            .unix(forecastConditions.daily[i].dt)
+            .tz(forecastConditions.timezone)
+            .format("MM/DD");
+      
+          $(card5dFrcstHdr).text(date);
+          $(card5dFrcst).append(card5dFrcstHdr);
+          $(card5dFrcstBdy).addClass("card-body single-day-body");
+          $(card5dFrcstBdy).attr("id", "card5dFrcstBdy" + "-" + i);
+          $(card5dFrcst).append(card5dFrcstBdy);
+          $(card5dFrcstIcn).addClass("row my-row");
+          $(card5dFrcstIcn).attr("id", "card5dFrcstIcn" + "-" + i);
+          $(card5dFrcstBdy).append(card5dFrcstIcn);
+          $(card5dIcnDiv).addClass("col-12 my-col justify-content-center");
+          $(card5dIcnDiv).attr("id", "card5dIcnDiv" + "-" + i);
+      
+          var imgURL =
+            "https://openweathermap.org/img/wn/" +
+            forecastConditions.daily[i].weather[0].icon +
+            ".png";
+      
+          $(card5dIcnDiv).append("<img src =" + imgURL + ">");
+          $(card5dFrcstIcn).append(card5dIcnDiv);
+          $(card5dFrcstTmp).addClass("row my-row");
+          $(card5dFrcstTmp).attr("id", "card5dFrcstTmp" + "-" + i);
+      
+          var Temp = forecastConditions.daily[i].temp.day.toFixed(0);
+          $(card5dFrcstTmp).text("Temp: " + Temp + String.fromCharCode(176) + "F");
+          $(card5dFrcstBdy).append(card5dFrcstTmp);
+          $(card5dFrcstRH).addClass("row my-row");
+          $(card5dFrcstRH).attr("id", "card5dFrcstRH" + "-" + i);
+      
+          var RH = forecastConditions.daily[i].humidity;
+          $(card5dFrcstRH).text("RH: " + RH + "%");
+          $("#card5dFrcstBdy" + "-" + i).append(card5dFrcstRH);
+        }
+      }
+      
+      function recentCities() {
+        $("#recent-cities-btns").empty();
+      
+        for (i = 0; i < localStorage.length; i++) {
+          if (isJSONcity(i)) {
+            let button = $("<button>");
+      
+            $(button).addClass("list-group-item list-group-item-action");
+            $(button).attr("id", localStorage.key(i));
+            $(button).attr("type", "button");
+            $(button).text(localStorage.key(i));
+      
+            $("#recent-cities-btns").append(button);
+      
+            $("#recent-cities").removeClass("hide");
+          }
+        }
+      }
